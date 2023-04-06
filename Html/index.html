@@ -1,41 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather</title>
     <link rel="stylesheet" href="../Css/style.css">
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoagFtZglLk9Jwc39rKnvTR47ZvWTspJ8&libraries=places&callback=initMap"></script>
 </head>
+
 <body>
     <nav>
-        <div><p>Favorite cities</p> <select name="" id=""></select></div>
-        <input type="text" placeholder="Search Bar (cities)">
+        <div>
+            <p>Favorite cities</p> <select name="" id=""></select>
+        </div>
+        <input id="city-input" type="text">
     </nav>
 
     <main id="currentWeather">
-        <div class="currentWeatherCity"><h3>City name</h3><div class="currentWeatherStarIcon"></div></div> 
+        <div class="currentWeatherCity">
+            <h3>City name</h3>
+            <div class="currentWeatherStarIcon"></div>
+        </div>
         <h3>c#</h3>
-        <div class="currentWeatherInfo"><h3>Weather info</h3></div>
+        <div class="currentWeatherInfo">
+            <h3>Weather info</h3>
+        </div>
     </main>
 
     <section id="dailyForecast">
-        <div><h2>Day 1</h2></div>
-        <div><h2>Day 2</h2></div>
-        <div><h2>Day 3</h2></div>
-        <div><h2>Day 4</h2></div>
-        <div><h2>Day 5</h2></div>
+        <div>
+            <h2>Day 1</h2>
+        </div>
+        <div>
+            <h2>Day 2</h2>
+        </div>
+        <div>
+            <h2>Day 3</h2>
+        </div>
+        <div>
+            <h2>Day 4</h2>
+        </div>
+        <div>
+            <h2>Day 5</h2>
+        </div>
     </section>
 
     <section id="hourGap">
-        <div><h2>0-3</h2></div>
-        <div><h2>3-6</h2></div>
-        <div><h2>6-9</h2></div>
-        <div><h2>9-12</h2></div>
-        <div><h2>12-15</h2></div>
-        <div><h2>15-18</h2></div>
-        <div><h2>18-21</h2></div>
-        <div><h2>21-24</h2></div>
+        <div>
+            <h2>0-3</h2>
+        </div>
+        <div>
+            <h2>3-6</h2>
+        </div>
+        <div>
+            <h2>6-9</h2>
+        </div>
+        <div>
+            <h2>9-12</h2>
+        </div>
+        <div>
+            <h2>12-15</h2>
+        </div>
+        <div>
+            <h2>15-18</h2>
+        </div>
+        <div>
+            <h2>18-21</h2>
+        </div>
+        <div>
+            <h2>21-24</h2>
+        </div>
     </section>
+
+    <script src="../JS/autocomplete.js"></script>
+    <script src="../JS/defaultLocation.js"></script>
+    <script src="../JS/favoritesDropdown.js"></script>
+    <script src="../JS/weatherAPIs.js"></script>
 </body>
+
 </html>
