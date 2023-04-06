@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather</title>
     <link rel="stylesheet" href="../Css/style.css">
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoagFtZglLk9Jwc39rKnvTR47ZvWTspJ8&libraries=places&callback=initMap"></script>
 </head>
+
 <body>
     <nav>
-        <div><p>Favorite cities</p> <select name="" id=""></select></div>
-        <input type="text" placeholder="Search Bar (cities)">
+        <div>
+            <p>Favorite cities</p> <select name="" id=""></select>
+        </div>
+        <input id="city-input" type="text">
     </nav>
 
     <main id="currentWeather">
@@ -22,7 +28,13 @@
     </section>
 
     <section id="hourGap">
-        
+
     </section>
+
+    <script src="../JS/autocomplete.js"></script>
+    <script src="../JS/defaultLocation.js"></script>
+    <script src="../JS/favoritesDropdown.js"></script>
+    <script src="../JS/weatherAPIs.js"></script>
 </body>
+
 </html>
