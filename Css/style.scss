@@ -137,3 +137,64 @@ main {
         justify-content: center;
     }
 }
+
+@media (max-width: 768px) {
+
+  body {
+    text-align: center;
+    font-size: 18px;
+  }
+
+  nav {
+
+
+    div {
+      width: 40%;
+      padding: 0px .5rem 0px .5rem;
+
+      p {
+        white-space: nowrap;
+      }
+
+      select {
+        position: relative;
+        right: 55%;
+      }
+    }
+
+    input {
+      width: 25%;
+    }
+  }
+
+  main {
+    flex-direction: column;
+    height: fit-content;
+
+    #weatherInforDetail {
+      flex-direction: column;
+      gap: 0px !important;
+    }
+  }
+
+  #dailyForecast {
+    padding: 1rem .2rem;
+    height: 25vh;
+    font-size: 1rem;
+
+    div {
+      width: 18%;
+    }
+  }
+
+  #hourGap {
+    flex-direction: column;
+    height: fit-content;
+    gap: .5rem;
+
+    div {
+      width: 100%;
+      height: 8vh;
+    }
+  }
+}
