@@ -21,18 +21,26 @@
 
     <main id="currentWeather">
         <div class="currentWeatherCity">
-            <h3>City name</h3>
+            <h3 id="cityName"></h3>
             <div class="currentWeatherStarIcon"></div>
         </div>
-        <h3>c#</h3>
+        <h3>Current Temp: <span id="currentTemp"></span></h3>
+        <div id="weatherIcon"></div>
         <div class="currentWeatherInfo">
-            <h3>Weather info</h3>
+            <div id="weatherInforDetail">
+                <h3 id="weatherDescription"></h3>
+                <p>min Temp <span id="minTemp"></span></p>
+                <p>max Temp <span id="maxTemp"></span></p>
+                <p>Humidity: <span id="humidity"></span>%</p>
+                <p>Wind: <span id="windSpeed"></span> m/s</p>
+            </div>
         </div>
     </main>
 
     <section id="dailyForecast">
         <div>
-            <h2>Day 1</h2>
+            <h2>Day 1 <p id="date"></p>
+            </h2>
         </div>
         <div>
             <h2>Day 2</h2>
