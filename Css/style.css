@@ -43,6 +43,7 @@ nav div select {
 }
 nav input {
   background-color: transparent;
+  color: rgb(210, 237, 247);
   margin-left: auto;
   padding: 0px 2rem 0px 2rem;
   height: 50%;
@@ -76,12 +77,20 @@ main .currentWeatherCity .currentWeatherStarIcon {
   position: relative;
   left: 30%;
 }
+main .currentWeatherTemperature {
+  gap: 2rem;
+}
 main .currentWeatherInfo {
-  width: 40%;
+  width: -moz-fit-content;
+  width: fit-content;
   height: 60%;
   border: solid 1px;
   flex-direction: column;
   justify-content: center;
+  padding: 0px 2rem 0px 2rem;
+}
+main .currentWeatherInfo #weatherInforDetail {
+  gap: 3rem;
 }
 
 #dailyForecast {
@@ -114,4 +123,52 @@ main .currentWeatherInfo {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 768px) {
+  body {
+    text-align: center;
+    font-size: 18px;
+  }
+  nav div {
+    width: 40%;
+    padding: 0px 0.5rem 0px 0.5rem;
+  }
+  nav div p {
+    white-space: nowrap;
+  }
+  nav div select {
+    position: relative;
+    right: 55%;
+  }
+  nav input {
+    width: 25%;
+  }
+  main {
+    flex-direction: column;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+  main #weatherInforDetail {
+    flex-direction: column;
+    gap: 0px !important;
+  }
+  #dailyForecast {
+    padding: 1rem 0.2rem;
+    height: 25vh;
+    font-size: 1rem;
+  }
+  #dailyForecast div {
+    width: 18%;
+  }
+  #hourGap {
+    flex-direction: column;
+    height: -moz-fit-content;
+    height: fit-content;
+    gap: 0.5rem;
+  }
+  #hourGap div {
+    width: 100%;
+    height: 8vh;
+  }
 }/*# sourceMappingURL=style.css.map */
