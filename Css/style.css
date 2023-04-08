@@ -84,14 +84,14 @@ main .currentWeatherInfo {
   justify-content: center;
 }
 
-#daily Forecast {
+#dailyForecast {
   height: 35vh;
   border: 1px solid;
   padding: 1rem 1rem;
   display: flex;
   justify-content: space-evenly;
 }
-#daily Forecast div {
+#dailyForecast div {
   height: 100%;
   width: 15%;
   border: 1px solid;

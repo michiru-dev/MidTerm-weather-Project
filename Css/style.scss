@@ -74,14 +74,14 @@ main {
     height: fit-content;
     // border: solid 1px;
     justify-content: center;
-    box-sizing: border-box;   
+    box-sizing: border-box;
 
     .currentWeatherStarIcon {
-        height: 2rem;
-        width: 2rem;
-        background-color: orange;
-        position: relative;
-        left: 30%;
+      height: 2rem;
+      width: 2rem;
+      background-color: orange;
+      position: relative;
+      left: 30%;
     }
   }
 
@@ -94,36 +94,36 @@ main {
   }
 }
 
-#daily  Forecast {
-    height: 35vh;
-    border: 1px solid;
-    padding: 1rem 1rem;
-    display: flex;
-    justify-content: space-evenly;
+#dailyForecast {
+  height: 35vh;
+  border: 1px solid;
+  padding: 1rem 1rem;
+  display: flex;
+  justify-content: space-evenly;
 
-    div {
-        height: 100%;
-        width:  15%;
-        border: 1px solid;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  div {
+    height: 100%;
+    width: 15%;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 #hourGap {
-    height: 35vh;
-    border: 1px solid;
-    padding: 1rem 1rem;
-    display: flex;
-    justify-content: space-evenly;
+  height: 35vh;
+  border: 1px solid;
+  padding: 1rem 1rem;
+  display: flex;
+  justify-content: space-evenly;
 
-    div {
-        height: 100%;
-        width:  11%;
-        border: 1px solid;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  div {
+    height: 100%;
+    width: 11%;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
