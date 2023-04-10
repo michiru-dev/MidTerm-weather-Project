@@ -59,8 +59,8 @@ const fetch5daysWeather = async (lat, lon) => {
         const tempElement = document.getElementById(`temp${dayIndex}`);
         dateElement.textContent = data.date;
         weatherElement.textContent = data.weather;
-        tempElement.textContent = `Max:  ${(data.maxTemp)} °C, 
-        Min: ${(data.minTemp)} °C, Avg:  ${(data.avgTemp)} °C`;
+        tempElement.innerHTML = `Max:  ${(data.maxTemp)} °C, </br> 
+        Min: ${(data.minTemp)} °C,</br>  Avg:  ${(data.avgTemp)} °C`;
     });
 }
 

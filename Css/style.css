@@ -94,19 +94,23 @@ main .currentWeatherInfo #weatherInforDetail {
 }
 
 #dailyForecast {
-  height: 35vh;
+  height: -moz-fit-content;
+  height: fit-content;
   border: 1px solid;
   padding: 1rem 1rem;
   display: flex;
   justify-content: space-evenly;
 }
 #dailyForecast div {
-  height: 100%;
-  width: 15%;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 17%;
+  text-align: center;
   border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+#dailyForecast div p {
+  margin-top: auto;
+  white-space: nowrap;
 }
 
 #hourGap {
