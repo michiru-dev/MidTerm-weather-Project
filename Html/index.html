@@ -14,7 +14,10 @@
 <body>
     <nav>
         <div>
-            <p>Favorite cities</p> <select name="" id=""></select>
+            <p>Favorite cities</p> 
+            <select name="" id="select">
+                <option value="">Select city</option>
+            </select>
         </div>
         <input id="city-input" type="text">
     </nav>
@@ -22,7 +25,7 @@
     <main id="currentWeather">
         <div class="currentWeatherCity">
             <h3 id="cityName"></h3>
-            <div class="currentWeatherStarIcon"></div>
+            <div id="favoriteBtn" class="currentWeatherStarIcon"><img id="starIcon" src="../Css/assets/Star_icon_stylized.svg.png" alt=""></div>
         </div>
         <div class="currentWeatherTemperature">
             <h3>Current Temp: <span id="currentTemp"></span></h3>
