@@ -1,3 +1,4 @@
+
 const fetchWeather = async (lat, lon) => {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=b096135c0ecd098d7bef5ed1f3046a48`)
     const jsonData = await response.json()
@@ -24,10 +25,11 @@ const fetchWeather = async (lat, lon) => {
 
 }
 
+
+
 const fetch5daysWeather = async (lat, lon) => {
     const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=b096135c0ecd098d7bef5ed1f3046a48`)
     const jsonData2 = await res.json()
-    console.log(jsonData2)
 
     const currentDate = new Date();
     const futureDate = new Date();
@@ -48,7 +50,6 @@ const fetch5daysWeather = async (lat, lon) => {
         return acc;
     }, {});
 
-    console.log(dailyData)
 
     // Calculate the average temperature for each day
     const dailyTemperatureData = Object.entries(dailyData).map(([date, data]) => {
@@ -141,3 +142,26 @@ const getWeather = () => {
 
 getWeather()
 
+//autocomplete
+function initMap() {
+    const input = document.getElementById("city-input");
+    input.placeholder = "Search Cities";
+
+    const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["(cities)"],
+    });
+
+    autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace()
+        if (place.geometry) {
+            const lat = place.geometry.location.lat()
+            const lon = place.geometry.location.lng()
+            fetchWeather(lat, lon)
+            fetch5daysWeather(lat, lon)
+            const getHourGap = document.querySelectorAll(".hourRange")
+            getHourGap.forEach((div) => {
+                div.textContent = ""
+            })
+        }
+    })
+}
