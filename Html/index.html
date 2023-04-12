@@ -27,8 +27,11 @@
             <h3 id="cityName"></h3>
             <div id="favoriteBtn" class="currentWeatherStarIcon"><img id="starIcon" src="../Css/assets/Star_icon_stylized.svg.png" alt=""></div>
         </div>
-        <div class="currentWeatherTemperature"><h3>Current Temp: <span id="currentTemp"></span></h3><div id="weatherIcon"></div></div>
-        
+        <div class="currentWeatherTemperature">
+            <h3>Current Temp: <span id="currentTemp"></span></h3>
+            <div id="weatherIcon"></div>
+        </div>
+
         <div class="currentWeatherInfo">
             <div id="weatherInforDetail">
                 <h3 id="weatherDescription"></h3>
@@ -41,43 +44,54 @@
     </main>
 
     <section id="dailyForecast">
-        <div>
+        <div class="date-link">
             <h2>
                 <p id="date1"></p>
             </h2>
-            <p><img id="icon1" src=""></p>
+            <p>
+                <span id="icon1"></span>
+            </p>
             <p><span id="weather1"></span></p>
             <p><span id="temp1"></span></p>
         </div>
-        <div>
+        <div class="date-link">
             <h2>
                 <p id="date2"></p>
             </h2>
-            <p><img id="icon2" src=""></p>
+            <p>
+                <span id="icon2"></span>
+            </p>
             <p><span id="weather2"></span></p>
             <p><span id="temp2"></span></p>
         </div>
-        <div>
+        <div class="date-link">
             <h2>
                 <p id="date3"></p>
             </h2>
-            <p><img id="icon3" src=""></p>
+            <p>
+                <span id="icon3"></span>
+            </p>
             <p><span id="weather3"></span></p>
             <p><span id="temp3"></span></p>
         </div>
-        <div>
+        <div class="date-link">
             <h2>
                 <p id="date4"></p>
             </h2>
-            <p><img id="icon4" src=""></p>
+            <p>
+                <span id="icon4"></span>
+            </p>
             <p><span id="weather4"></span></p>
             <p><span id="temp4"></span></p>
         </div>
-        <div>
+        <div class="date-link">
             <h2>
-                <p id="date5"></p>
+                <p id="date5">
+                </p>
             </h2>
-            <p><img id="icon5" src=""></p>
+            <p>
+                <span id="icon5"></span>
+            </p>
             <p><span id="weather5"></span></p>
             <p><span id="temp5"></span></p>
         </div>
@@ -86,27 +100,35 @@
     <section id="hourGap">
         <div>
             <h2>0-3</h2>
+            <div id="hourGap0"></div>
         </div>
         <div>
             <h2>3-6</h2>
+            <div id="hourGap1"></div>
         </div>
         <div>
             <h2>6-9</h2>
+            <div id="hourGap2"></div>
         </div>
         <div>
             <h2>9-12</h2>
+            <div id="hourGap3"></div>
         </div>
         <div>
             <h2>12-15</h2>
+            <div id="hourGap4"></div>
         </div>
         <div>
             <h2>15-18</h2>
+            <div id="hourGap5"></div>
         </div>
         <div>
             <h2>18-21</h2>
+            <div id="hourGap6"></div>
         </div>
         <div>
             <h2>21-24</h2>
+            <div id="hourGap7"></div>
         </div>
     </section>
 
@@ -114,6 +136,7 @@
     <script src="../JS/defaultLocation.js"></script>
     <script src="../JS/favoritesDropdown.js"></script>
     <script src="../JS/weatherAPIs.js"></script>
+    <script src="../JS/hourGap.js"></script>
 </body>
 
 </html>
