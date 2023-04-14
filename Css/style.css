@@ -126,7 +126,7 @@ main .currentWeatherInfo #weatherInforDetail {
 }
 
 #hourGap {
-  height: 30vh;
+  height: 33vh;
   padding: 1rem 1rem;
   display: flex;
   justify-content: space-evenly;
@@ -134,7 +134,7 @@ main .currentWeatherInfo #weatherInforDetail {
 }
 #hourGap > div {
   height: 100%;
-  width: 11%;
+  width: 12%;
   display: flex;
   flex-direction: column;
   align-items: center;
