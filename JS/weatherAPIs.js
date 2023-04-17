@@ -1,10 +1,25 @@
-const fetchWeather = async (lat, lon) => {
+let cityName;
+const select = document.querySelector("#select");
+const myImage = document.getElementById("favoriteBtn");
+const searchInput = document.getElementById("city-input");
+let toggleFavorite;
+let changeDropDown;
+
+//どんどんfavoriteが追加されないように
+const clearDropDown = () => {
+  let children = select.children;
+  for (let i = children.length - 1; i > 0; i--) {
+    select.removeChild(children[i]);
+  }
+};
+
+const fetchDataAndDisplay = async (lat, lon) => {
   const response = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=b096135c0ecd098d7bef5ed1f3046a48`
   );
   const jsonData = await response.json();
 
-  const cityName = document.getElementById("cityName");
+  cityName = document.getElementById("cityName");
   const currentTemp = document.getElementById("currentTemp");
   const weatherDescription = document.getElementById("weatherDescription");
   const humidity = document.getElementById("humidity");
@@ -21,84 +36,132 @@ const fetchWeather = async (lat, lon) => {
   humidity.textContent = jsonData.main.humidity;
   windSpeed.textContent = jsonData.wind.speed;
   weatherIcon.innerHTML = `<img src="http://openweathermap.org/img/wn/${jsonData.weather[0].icon}.png">`;
+};
+
+const updateLatAndLon = (lat, lon) => {
+  const latitude = document.getElementById("latitude");
+  const longtitude = document.getElementById("longtitude");
+  latitude.innerText = lat;
+  longtitude.innerText = lon;
+};
+
+const executeFunc = async (lat, lon) => {
+  updateLatAndLon(lat, lon);
+
+  await fetchDataAndDisplay(lat, lon);
+
+  changeDropDown = (e) => {
+    const position = e.target.value.split(" ");
+    console.log("ss");
+    if (position.length) {
+      myImage.classList.add("yes");
+
+      const [lat, lon] = position;
+      fetchDataAndDisplay(lat, lon);
+      fetch5daysWeather(lat, lon);
+      updateLatAndLon(lat, lon);
+      searchInput.value = ""; //clear
+    }
+  };
+
+  select.addEventListener("change", changeDropDown);
+
+  myImage.classList.remove("yes");
 
   // localStorage
-
-  let favoriteCitiesJSON = localStorage.getItem("favoriteCities");
+  const favoriteCitiesJSON = localStorage.getItem("favoriteCities");
   let favoriteCities = JSON.parse(favoriteCitiesJSON);
-  const myImage = document.getElementById("favoriteBtn");
-  const select = document.querySelector('#select');
-  myImage.classList.remove("yes");
 
   try {
     function updateDropdown(city_item) {
-        let option = document.createElement('option');
-        option.textContent = city_item.name;
-        select.appendChild(option);
+      let option = document.createElement("option");
+      option.textContent = city_item.name;
+      option.value = `${city_item.lat} ${city_item.lon}`;
+      select.appendChild(option);
     }
 
     // getting all favorite cities from localStorage, then checking with the actual city
     // after everything ok, add the image classList and updating the dropdown
 
-    if(favoriteCities) {
-        favoriteCities.forEach((city) => {
-            if (city.name == cityName.textContent) {
-                if (city.favorite === true) {
-                  myImage.classList.add("yes");
-                }
-            }
+    if (favoriteCities) {
+      clearDropDown();
 
-            updateDropdown(city);
-        });
+      favoriteCities.forEach((city) => {
+        if (city.name == cityName.textContent) {
+          if (city.favorite === true) {
+            myImage.classList.add("yes");
+          }
+        }
+
+        updateDropdown(city);
+      });
     }
 
-    myImage.addEventListener("click", () => {
-        // Check if the actual city matches with the localStorage existing json
-        // If not, create a new null array
+    // toggle Favorite
+    toggleFavorite = () => {
+      // Check if the actual city matches with the localStorage existing json
+      // If not, create a new null array
 
-        if(!favoriteCities) {
-            favoriteCities = [];
-        }
+      const latitude = document.getElementById("latitude");
+      const longtitude = document.getElementById("longtitude");
+      const _lat = latitude.innerText;
+      const _lon = longtitude.innerText;
 
-        let favoriteCity = {
-            name: cityName.textContent,
-            favorite: true
-        }
+      if (!favoriteCities) {
+        favoriteCities = [];
+      }
+      let favoriteCity = {
+        name: cityName.textContent,
+        lat: _lat,
+        lon: _lon,
+        favorite: true,
+      };
 
-        if(!myImage.classList.contains("yes")) {
-            favoriteCities.push(favoriteCity);
-            localStorage.setItem('favoriteCities', JSON.stringify(favoriteCities));
+      if (!myImage.classList.contains("yes")) {
+        if (
+          favoriteCities.findIndex(
+            (city) => city.name === cityName.textContent
+          ) === -1
+        ) {
+          favoriteCities.push(favoriteCity);
+          localStorage.setItem(
+            "favoriteCities",
+            JSON.stringify(favoriteCities)
+          );
 
-            favoriteCities.forEach((city) => {
-                if (city.name == cityName.textContent) {
-                    if (city.favorite === true) {
-                      myImage.classList.add("yes");
-                    }
-                }
-            });
-        }else {
-            let selectedCity = favoriteCities.map((city) => city.name).indexOf(cityName.textContent);
-
-            if (selectedCity > -1) {
-                favoriteCities.splice(selectedCity, 1);
-                localStorage.setItem('favoriteCities', JSON.stringify(favoriteCities));
-                myImage.classList.remove("yes");
+          favoriteCities.forEach((city) => {
+            if (city.name == cityName.textContent) {
+              if (city.favorite === true) {
+                myImage.classList.add("yes");
+              }
             }
+          });
         }
+      } else {
+        let selectedCity = favoriteCities
+          .map((city) => city.name)
+          .indexOf(cityName.textContent);
 
-        // cleaning the select, then, updating their respective options
-
-        let children = select.children;
-
-        for (let i = children.length - 1; i > 0; i--) {
-            select.removeChild(children[i]);
+        if (selectedCity > -1) {
+          favoriteCities.splice(selectedCity, 1);
+          localStorage.setItem(
+            "favoriteCities",
+            JSON.stringify(favoriteCities)
+          );
+          myImage.classList.remove("yes");
+          select.selectedIndex = 0;
         }
+      }
 
-        favoriteCities.forEach(city => {
-          updateDropdown(city)
-        })
-    });
+      // cleaning the select, then, updating their respective options
+      clearDropDown();
 
+      favoriteCities.forEach((city) => {
+        updateDropdown(city);
+      });
+    };
+
+    myImage.addEventListener("click", toggleFavorite);
   } catch (error) {
     throw new Error(error);
   }
@@ -192,7 +255,7 @@ const fetch5daysWeather = async (lat, lon) => {
         newDiv.innerHTML = `<img src="http://openweathermap.org/img/wn/${hourGap.weather[0].icon}.png">`;
         getHourGap.replaceChildren();
         getHourGap.appendChild(newSpan);
-        getHourGap.appendChild(newP);
+        getHourGap.appendChild(newP).className = "weatherInformation";
         getHourGap.appendChild(newDiv);
       });
     });
@@ -205,7 +268,7 @@ const getWeather = () => {
   let lon = -123.116226;
 
   if (!navigator.geolocation) {
-    fetchWeather(lat, lon);
+    executeFunc(lat, lon);
     fetch5daysWeather(lat, lon);
     return;
   }
@@ -213,13 +276,13 @@ const getWeather = () => {
   const onSuccess = (position) => {
     lat = position.coords.latitude;
     lon = position.coords.longitude;
-    fetchWeather(lat, lon);
+    executeFunc(lat, lon);
     fetch5daysWeather(lat, lon);
   };
 
   const onError = (err) => {
     console.log(err);
-    fetchWeather(lat, lon);
+    executeFunc(lat, lon);
     fetch5daysWeather(lat, lon);
   };
 
@@ -230,10 +293,9 @@ getWeather();
 
 //autocomplete
 function initMap() {
-  const input = document.getElementById("city-input");
-  input.placeholder = "Search Cities";
+  searchInput.placeholder = "Search Cities";
 
-  const autocomplete = new google.maps.places.Autocomplete(input, {
+  const autocomplete = new google.maps.places.Autocomplete(searchInput, {
     types: ["(cities)"],
   });
 
@@ -242,12 +304,65 @@ function initMap() {
     if (place.geometry) {
       const lat = place.geometry.location.lat();
       const lon = place.geometry.location.lng();
-      fetchWeather(lat, lon);
+
+      //executefuncするたびにaddeventで新しい値が生成されちゃうから先にremove
+      if (typeof toggleFavorite === "function") {
+        myImage.removeEventListener("click", toggleFavorite);
+      }
+
+      if (typeof changeDropDown === "function") {
+        select.removeEventListener("change", changeDropDown);
+      }
+
+      executeFunc(lat, lon);
       fetch5daysWeather(lat, lon);
       const getHourGap = document.querySelectorAll(".hourRange");
       getHourGap.forEach((div) => {
         div.textContent = "";
       });
     }
+    //set default value in favorite input
+    select.selectedIndex = 0;
+  });
+  //cleaer input value when focused
+  searchInput.addEventListener("focus", () => {
+    searchInput.value = "";
   });
 }
+
+// here starts the background image code
+
+const weather2 = document.querySelectorAll(".dailyForecastDate");
+
+const weather = {
+  cloudyDay: "url(../Css/assets/weatherImages/cloudy_day.png)",
+  sunnyDay: "url(../Css/assets/weatherImages/clearSky_day.png)",
+  rainingDay: "url(../Css/assets/weatherImages/raining_day.png)",
+};
+
+const dayRange = document.querySelectorAll(".date-link");
+
+let i = 0;
+
+dayRange.forEach((div) => {
+  if (
+    weather2[i] == "overcast clouds" ||
+    "broken clouds" ||
+    "scattered clouds"
+  ) {
+    div.style.backgroundImage = weather.cloudyDay;
+  } else if (weather2[i] == "light rain" || "moderate rain") {
+    div.style.backgroundImage = weather.rainingDay;
+  } else if (weather2[i] == "clear sky" || "few clouds") {
+    div.style.backgroundImage = weather.sunnyDay;
+  }
+
+  i++;
+});
+
+const hourRange = document.querySelectorAll(".hourGapContainer");
+const hourP = document.querySelectorAll(".weatherInformation");
+
+hourRange.forEach((div) => {
+  div.style.backgroundImage = weather.sunnyDay;
+});
