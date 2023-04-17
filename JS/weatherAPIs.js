@@ -52,7 +52,6 @@ const executeFunc = async (lat, lon) => {
 
   changeDropDown = (e) => {
     const position = e.target.value.split(" ");
-    console.log("ss");
     if (position.length) {
       myImage.classList.add("yes");
 
@@ -207,6 +206,7 @@ const fetch5daysWeather = async (lat, lon) => {
       273.15;
     const description = data[0].weather[0].description;
     const icon = data[0].weather[0].icon;
+
     return {
       date,
       maxTemp: maxTemp.toFixed(1),
@@ -217,6 +217,12 @@ const fetch5daysWeather = async (lat, lon) => {
     };
   });
 
+  var storageWeekTemperatureData;
+  let storageWeekTemperatureDataArray = [];
+
+  var dateHourRange;
+  let dateHourRangeArray = [];
+
   // Display weather information for each day
   dailyTemperatureData.forEach((data, index) => {
     const dayIndex = index + 1;
@@ -224,6 +230,12 @@ const fetch5daysWeather = async (lat, lon) => {
     const weatherElement = document.getElementById(`weather${dayIndex}`);
     const tempElement = document.getElementById(`temp${dayIndex}`);
     const iconElement = document.getElementById(`icon${dayIndex}`);
+
+    storageWeekTemperatureDataArray.push(data);
+
+    storageWeekTemperatureData = new Promise((resolve, reject) => {
+      resolve(storageWeekTemperatureDataArray);
+    })
 
     if (dateElement && weatherElement && tempElement && iconElement) {
       dateElement.textContent = data.date;
@@ -234,16 +246,24 @@ const fetch5daysWeather = async (lat, lon) => {
     }
   });
 
+  storageWeekTemperatureData.then((items) => {
+    items.map((item) => (
+      applyBackgroundImage(item.weather)
+    ))
+  })
+
   //get 3hours
   const getDate = document.querySelectorAll(".date-link");
 
   //getDateに直接アドイベントできない理由はgetDateがリストだから
   //Allで取ってきてるから
+
   getDate.forEach(function (dateDiv) {
     dateDiv.addEventListener("click", function (e) {
       const targetId = dateDiv.children[0].children[0].id;
       const dateSpan = this.querySelector(`#${targetId}`);
       const dateText = dateSpan.textContent;
+
       //dailyDataのオブジェクトにキー（日にち）でアクセス
       dailyData[dateText].forEach((hourGap, index) => {
         const getHourGap = document.getElementById(`hourGap${index}`);
@@ -257,9 +277,15 @@ const fetch5daysWeather = async (lat, lon) => {
         getHourGap.appendChild(newSpan);
         getHourGap.appendChild(newP).className = "weatherInformation";
         getHourGap.appendChild(newDiv);
+
+        // sorry for the long text
+        dateHourRangeArray.push(hourGap);
+        applyHourRangeBackgroundByHourGapDescription(hourGap, index);
+
       });
     });
   });
+
 };
 
 //Current Weather
@@ -332,37 +358,91 @@ function initMap() {
 
 // here starts the background image code
 
-const weather2 = document.querySelectorAll(".dailyForecastDate");
-
 const weather = {
   cloudyDay: "url(../Css/assets/weatherImages/cloudy_day.png)",
+  scatteredCloudsDay: "url(../Css/assets/weatherImages/scatteredClouds_day.png)",
   sunnyDay: "url(../Css/assets/weatherImages/clearSky_day.png)",
   rainingDay: "url(../Css/assets/weatherImages/raining_day.png)",
+  lightRainingDay: "url(../Css/assets/weatherImages/lightRaining_day.png)",
+  lightSnowDay: "url(../Css/assets/weatherImages/lightSnow_day.png)",
+  heavySnowDay: "url(../Css/assets/weatherImages/heavySnow_day.png)",
 };
 
-const dayRange = document.querySelectorAll(".date-link");
+function applyBackgroundImage() {
+  const weather2 = document.querySelectorAll(".dailyForecastDate");
+  
+  const dayRange = document.querySelectorAll(".date-link");
+  
+  let i = 0;
 
-let i = 0;
+  dayRange.forEach((day) => {
+    switch(weather2[i].textContent) {
+      case "overcast clouds":
+        day.style.backgroundImage = weather.cloudyDay;
+      break;
+      case "light rain":
+        day.style.backgroundImage = weather.lightRainingDay;
+      break;
+      case "moderate rain":
+        day.style.backgroundImage = weather.rainingDay;
+      break;
+      case "clear sky":
+        day.style.backgroundImage = weather.sunnyDay;
+      break;
+      case "broken clouds" || "scattered clouds" || "few clouds":
+        day.style.backgroundImage = weather.scatteredCloudsDay;
+      break;
+      case "light snow": 
+        day.style.backgroundImage = weather.heavySnowDay;
+      break;
+    }
 
-dayRange.forEach((div) => {
-  if (
-    weather2[i] == "overcast clouds" ||
-    "broken clouds" ||
-    "scattered clouds"
-  ) {
-    div.style.backgroundImage = weather.cloudyDay;
-  } else if (weather2[i] == "light rain" || "moderate rain") {
-    div.style.backgroundImage = weather.rainingDay;
-  } else if (weather2[i] == "clear sky" || "few clouds") {
-    div.style.backgroundImage = weather.sunnyDay;
-  }
+    i++;
 
-  i++;
-});
+  });
+}
 
 const hourRange = document.querySelectorAll(".hourGapContainer");
 const hourP = document.querySelectorAll(".weatherInformation");
 
-hourRange.forEach((div) => {
-  div.style.backgroundImage = weather.sunnyDay;
-});
+function applyHourRangeBackgroundByHourGapDescription(hourGap, index) {
+  let description = hourGap.weather[0].description;
+  let hourGapDiv = document.getElementById(`container${index}`);
+
+  const weather = {
+    cloudyDay: "url(../Css/assets/weatherImages/cloudy_day.png)",
+    scatteredCloudsDay: "url(../Css/assets/weatherImages/scatteredClouds_day.png)",
+    sunnyDay: "url(../Css/assets/weatherImages/clearSky_day.png)",
+    rainingDay: "url(../Css/assets/weatherImages/raining_day.png)",
+    lightRainingDay: "url(../Css/assets/weatherImages/lightRaining_day.png)",
+    lightSnowDay: "url(../Css/assets/weatherImages/lightSnow_day.png)",
+    heavySnowDay: "url(../Css/assets/weatherImages/heavySnow_day.png)",
+  };
+
+  switch(description) {
+    case "overcast clouds":
+      hourGapDiv.style.backgroundImage = weather.cloudyDay;
+    break;
+    case "light rain":
+      hourGapDiv.style.backgroundImage = weather.lightRainingDay;
+    break;
+    case "moderate rain":
+      hourGapDiv.style.backgroundImage = weather.rainingDay;
+    break;
+    case "clear sky":
+      hourGapDiv.style.backgroundImage = weather.sunnyDay;
+    break;
+    case "broken clouds":
+      hourGapDiv.style.backgroundImage = weather.scatteredCloudsDay;  
+    break;
+    case "scattered clouds":
+      hourGapDiv.style.backgroundImage = weather.scatteredCloudsDay;  
+    break;
+    case "few clouds":
+      hourGapDiv.style.backgroundImage = weather.scatteredCloudsDay;  
+    break;
+    case "light snow":
+      hourGapDiv.style.backgroundImage = weather.heavySnowDay;
+    break;
+  }
+}
