@@ -78,6 +78,7 @@ main .currentWeatherCity .latAndLon div {
   margin-top: -1.5rem;
   display: flex;
   flex-direction: column;
+  display: none;
 }
 main .currentWeatherCity .currentWeatherStarIcon {
   position: relative;
